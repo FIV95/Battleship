@@ -14,7 +14,7 @@ board = [
     ]
 
 # player will have blank board on game start
-# player will fill in their boat positions
+# player will fill have their boat positions filled
 # computer will automatically place their boats on game start
 
 # need a way to label array positons to something the player understands:
