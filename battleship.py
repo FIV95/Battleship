@@ -1,3 +1,4 @@
+from termcolor import colored, cprint
 board = [
 # . 1 2 3 4 5 6 7 8 9 10
     [0,0,0,0,0,0,0,0,0,0], #A
@@ -36,7 +37,13 @@ board = [
 #! Game Functions
 
 def gameStart():
-    print("""
+    start_game = "(s) = Start Game"
+    info = "(i) = Info"
+    quit = "(q) = quit"
+    colored_start_game = colored(start_game, 'green')
+    colored_info = colored(info, 'blue')
+    colored_quit = colored(quit, 'red')
+    logo1 = ("""
         ############################################################################################################
         #                                                                                                          #
         #    ███████████             █████     █████    ████               █████████  █████       ███              #
@@ -50,26 +57,33 @@ def gameStart():
         #                                                                                              ░███        #
         #                                                                                              █████       #
         #                                                                                             ░░░░░        #
-        # -------------------------------------------------------------------------------------------------------- #
-        #   (s) = Start Game                                                                                       #
-        #   (i) = Info                                                                                             #
-        #   (q) = quit                                                                                             #
+        # -------------------------------------------------------------------------------------------------------- #""")
+    logo2 = f"""
+        #   {colored_start_game}                                                                                       #
+        #   {colored_info}                                                                                             #
+        #   {colored_quit}                                                                                             #
         #                                                                                                          #
         ############################################################################################################
-""")
+    """
+    print(logo1, end="")
+    print(logo2)
+
 def gameInfo():
     print("""
+    ###################################################################################################################
     +------------------------------------------------------------------------------------------------------------------+
     |  Hello and welcome to the the terminal version of the classic boardgame battleship!                              |
     |                                                                                                                  |
     |  In this version you will be battling against an automated opponent - a true multiplayer mode may be introduced  |
     |  in a future release!                                                                                            |
     |                                                                                                                  |
+    |  In this current version, your boats your boats and the enemy boats will be placed automatically.                |
+    |                                                                                                                  |
     |  Game Objective: The Rules are simple, destroy the five enemy ships before they can destroy yours. Each turn     |
     |  you are allowed to fire one "shell" onto the enemies playing field by entering a coordinate. The enemy will     |
     |  also fire onto your playing field each turn.                                                                    |
     |                                                                                                                  |
-    |   When prompted the coordinate must be entered in the following format: A1, B2, C3, etc.                         |
+    |  When prompted the coordinate must be entered in the following format: A1, B2, C3, etc.                          |
     |                                                                                                                  |
     |  Each ship has a different length and is represented by a letter on the board.                                   |
     |  *Carrier: 5 spaces - C                                                                                          |
@@ -118,8 +132,16 @@ def gameInfo():
     |                           I ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  | 0  ||                       |
     |                           J ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  | 0  ||                       |
     |__________________________________________________________________________________________________________________|
+    | Good luck and have fun!                                                                                          |
+    | If you wish to start the game, please enter 's'. Any other character will return you to the main menu.           |
     +------------------------------------------------------------------------------------------------------------------+
     """)
+    response = input()
+    if response == 's':
+        pass
+    else:
+        gameLoop()
+
 def gameLoop():
     while True:
         response = input()
@@ -130,7 +152,9 @@ def gameLoop():
         elif response == 'q':
             while True:
                 print("Are you sure you wish to exit?")
-                confirm = input("(y)es / (n)o\n")
+                input_color_yes = colored("(y)es", 'green')
+                input_color_no = colored("(n)o", 'red')
+                confirm = input(f"{input_color_yes} or {input_color_no}?\n")
                 if confirm == 'y':
                     print("Exiting game...")
                     exit()
@@ -138,8 +162,7 @@ def gameLoop():
                     print("Please enter 's', 'i', or 'q'")
                     gameLoop()
         else:
-            print("Invalid selection, Pleaes enter 's' 'i' or 'q'")
-
+            cprint("Invalid selection Pleaes enter 's' 'i' or 'q'", "red", "on_green", attrs=["bold"])
 #! Main
 gameStart()
 gameLoop()
