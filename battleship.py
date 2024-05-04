@@ -65,7 +65,14 @@ def printDemo(board_string):
 
     for line in colored_board.splitlines():
         print(line)
-
+def infoColor(info):
+    colored_info = ""
+    for char in info:
+        if char not in [' ', '|']:
+            colored_info += colored(char, 'cyan')
+        else:
+            colored_info += char
+    return colored_info
 
 def gameStart():
     start_game = "(s) = Start Game"
@@ -147,7 +154,7 @@ def gameInfo():
     info7_5 = """Keep in mind you will not be able to see the enemies board, only your own mission data."""
     board1 = """
     |__________________________________________________________________________________________________________________|
-    |                        ||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10                              |
+    |                        ||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10  ||                          |
     | ________________________________________________________________________________________________________________ |
     |                      A ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  P  |  P   ||                          |
     |                      B ||  C  |  C  |  C  |  C  |  C  |  0  |  0  |  0  |  0  |  0   ||                          |
@@ -180,37 +187,18 @@ def gameInfo():
     +------------------------------------------------------------------------------------------------------------------+
     """
     print(info0, end="")
-    info1_colored = ""
+    info1_colored = infoColor(info1)
+    info2_colored = infoColor(info2)
+    info4_colored = infoColor(info4)
+    info6_colored = infoColor(info6)
 
-    for char in info1:
-        if char not in [' ', '|']:
-            info1_colored += colored(char, 'cyan')
-        else:
-            info1_colored += char
-    info2_colored = ""
-    for char in info2:
-        if char not in [' ', '|']:
-            info2_colored += colored(char, 'cyan')
-        else:
-            info2_colored += char
     info3_colored = ""
     for char in info3:
         if char not in [' ', '|']:
             info3_colored += colored(char, 'cyan', attrs=["underline"])
         else:
             info3_colored += char
-    info4_colored = ""
-    for char in info4:
-        if char not in [' ', '|']:
-            info4_colored += colored(char, 'cyan')
-        else:
-            info4_colored += char
-    format_colored = ""
-    for char in attkFormat:
-        if char not in [' ', '|']:
-            format_colored += colored(char, 'cyan', attrs=["underline"])
-        else:
-            attkFormat += char
+
     info5_colored = ""
     for char in info5:
         if char not in [' ', '|']:
@@ -228,12 +216,6 @@ def gameInfo():
         else:
             info5_colored += char
 
-    info6_colored = ""
-    for char in info6:
-        if char not in [' ', '|']:
-            info6_colored += colored(char, 'cyan')
-        else:
-            info6_colored += char
     info7_colored = ""
     for char in info7:
         if char not in [' ', '|']:
@@ -250,8 +232,8 @@ def gameInfo():
     print(info3, end="")
     cprint(info3_5, "cyan", attrs=["underline"], end=" ")
     print(info4_colored, end=" ")
-    print(format_colored, end="")
-    print("                           |\n", end="")
+    cprint(attkFormat, "cyan", attrs=["underline"], end="")
+    print("                        |\n", end="")
     print("    |                                                                                                                  |", end="")
     print(info5_colored, end="")
     print(info6_colored, end="")
