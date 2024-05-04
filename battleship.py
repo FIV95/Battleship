@@ -41,8 +41,8 @@ def printDemo(board_string):
     board_array = board_string.split('\n')  # Split the string into lines
     for board in board_array:
         if "||" in board:  # Check if || is in the line
-            row_label, board_content = board.split("||", 1)  # Split the line into row label and board content at the first occurrence of ||
-            colored_board += row_label + "||"  # Add the row label and || to colored_board without any coloring
+            row_label, board_content = board.split("||", 1)
+            colored_board += row_label + "||"
             for char in board_content:
                 if char in ['P', 'C', 'D', 'S', 'B', '0']:
                     if char == 'P':
@@ -59,7 +59,7 @@ def printDemo(board_string):
                         colored_board += colored(char, 'blue')
                 else:
                     colored_board += char
-        else:  # This is a row label or border
+        else:
             colored_board += board
         colored_board += "\n"
 
