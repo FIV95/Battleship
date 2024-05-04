@@ -69,22 +69,28 @@ def gameStart():
     print(logo2)
 
 def gameInfo():
-    print("""
+    info0 = """
     ###################################################################################################################
-    +------------------------------------------------------------------------------------------------------------------+
-    |  Hello and welcome to the the terminal version of the classic boardgame battleship!                              |
+    +------------------------------------------------------------------------------------------------------------------+"""
+    info1= """
+    |  Hello and welcome to the the terminal version of the classic boardgame battleship!                              |"""
+    info2 = """
     |                                                                                                                  |
     |  In this version you will be battling against an automated opponent - a true multiplayer mode may be introduced  |
     |  in a future release!                                                                                            |
     |                                                                                                                  |
-    |  In this current version, your boats your boats and the enemy boats will be placed automatically.                |
+    |  In this current version, your boats and the enemy boats will be placed automatically.                           |
     |                                                                                                                  |
-    |  Game Objective: The Rules are simple, destroy the five enemy ships before they can destroy yours. Each turn     |
+    """
+    info3 = """|  """
+    info3_5 = """Game Objective:"""
+    info4 = """The Rules are simple, destroy the five enemy ships before they can destroy yours. Each turn     |
     |  you are allowed to fire one "shell" onto the enemies playing field by entering a coordinate. The enemy will     |
     |  also fire onto your playing field each turn.                                                                    |
     |                                                                                                                  |
-    |  When prompted the coordinate must be entered in the following format: A1, B2, C3, etc.                          |
-    |                                                                                                                  |
+    |  When prompted the coordinate must be entered in the following format:"""
+    attkFormat = """A1, B2, C3, etc..."""
+    info5 = """
     |  Each ship has a different length and is represented by a letter on the board.                                   |
     |  *Carrier: 5 spaces - C                                                                                          |
     |  *Battleship: 4 spaces - B                                                                                       |
@@ -96,17 +102,22 @@ def gameInfo():
     |  *Hits are represented by an '#'                                                                                 |
     |  *Sunk ships are represented by a '!'                                                                            |
     |  *Spaces not yet fired upon are represented by a '0'                                                             |
-    |                                                                                                                  |
+    |                                                                                                                  |"""
+    info6 = """
     |  You will be notified when you have hit, missed, or sunk an enemy ship. Likewise, the enemy will know when they  |
     |  have hit, missed, or sunk one of your ships.                                                                    |
     |                                                                                                                  |
     |  Ships can be placed horizontally or vertically, but not diagonally. Ships can be placed touching each other,    |
-    |  but not overlapping.                                                                                            |
+    |  but not overlapping.                                                                                            |"""
+    info7 = """
     |                                                                                                                  |
-    |  A sample board is shown below of what the enemy's boat positioning may look like:                               |
-    |  Keep in mind you will not be able to see the enemies board, only your own.                                      |
+    | *A sample board is shown below of what the enemy's boat positioning may look like:                               |
+    |  """
+    info7_5 = """Keep in mind you will not be able to see the enemies board, only your own mission data."""
+    board1_a = """
     |------------------------------------------------------------------------------------------------------------------|
-    |                            ||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10                          |
+    |                            ||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10                          |"""
+    board1_b = """
     | ________________________________________________________________________________________________________________ |
     |                          A ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  P  |  P   ||                      |
     |                          B ||  C  |  C  |  C  |  C  |  C  |  0  |  0  |  0  |  0  |  0   ||                      |
@@ -118,6 +129,8 @@ def gameInfo():
     |                          I ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                      |
     |                          J ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                      |
     |------------------------------------------------------------------------------------------------------------------|
+    """
+    board2= """
     | The board below represents your view of the enemies board. You will be able to see hits, misses, and sunk ships. |
     |__________________________________________________________________________________________________________________|
     |                             ||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10                         |
@@ -135,7 +148,87 @@ def gameInfo():
     | Good luck and have fun!                                                                                          |
     | If you wish to start the game, please enter 's'. Any other character will return you to the main menu.           |
     +------------------------------------------------------------------------------------------------------------------+
-    """)
+    """
+    print(info0, end="")
+    info1_colored = ""
+
+    for char in info1:
+        if char not in [' ', '|']:
+            info1_colored += colored(char, 'cyan')
+        else:
+            info1_colored += char
+    info2_colored = ""
+    for char in info2:
+        if char not in [' ', '|']:
+            info2_colored += colored(char, 'cyan')
+        else:
+            info2_colored += char
+    info3_colored = ""
+    for char in info3:
+        if char not in [' ', '|']:
+            info3_colored += colored(char, 'cyan', attrs=["underline"])
+        else:
+            info3_colored += char
+    info4_colored = ""
+    for char in info4:
+        if char not in [' ', '|']:
+            info4_colored += colored(char, 'cyan')
+        else:
+            info4_colored += char
+    format_colored = ""
+    for char in attkFormat:
+        if char not in [' ', '|']:
+            format_colored += colored(char, 'cyan', attrs=["underline"])
+        else:
+            attkFormat += char
+    info5_colored = ""
+    for char in info5:
+        if char not in [' ', '|']:
+            if char == '*':
+                info5_colored += colored(char, 'red', attrs=["bold"])
+            elif char == '0':
+                info5_colored += colored(char, 'blue')
+            elif char == 'X':
+                info5_colored += colored(char, 'white')
+            elif char == '#':
+                info5_colored += colored(char, 'yellow')
+            elif char == '!':
+                info5_colored += colored(char, 'red')
+            else : info5_colored += colored(char, 'cyan')
+        else:
+            info5_colored += char
+
+    info6_colored = ""
+    for char in info6:
+        if char not in [' ', '|']:
+            info6_colored += colored(char, 'cyan')
+        else:
+            info6_colored += char
+    info7_colored = ""
+    for char in info7:
+        if char not in [' ', '|']:
+            if char == '*':
+                info7_colored += colored(char, 'red', attrs=["bold"])
+            else:
+                info7_colored += colored(char, 'cyan')
+        else:
+            info7_colored += char
+
+
+    print(info1_colored, end="")
+    print(info2_colored, end="")
+    print(info3, end="")
+    cprint(info3_5, "cyan", attrs=["underline"], end=" ")
+    print(info4_colored, end=" ")
+    print(format_colored, end="")
+    print("                           |\n", end="")
+    print("    |                                                                                                                  |", end="")
+    print(info5_colored, end="")
+    print(info6_colored, end="")
+    print(info7_colored, end="")
+    cprint(info7_5, "cyan", attrs=["underline"], end=" ")
+    print("                        |\n", end="")
+
     response = input()
     if response == 's':
         pass
