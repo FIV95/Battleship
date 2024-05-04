@@ -36,6 +36,37 @@ board = [
 
 #! Game Functions
 
+def printDemo(board_string):
+    colored_board = ""
+    board_array = board_string.split('\n')  # Split the string into lines
+    for board in board_array:
+        if "||" in board:  # Check if || is in the line
+            row_label, board_content = board.split("||", 1)  # Split the line into row label and board content at the first occurrence of ||
+            colored_board += row_label + "||"  # Add the row label and || to colored_board without any coloring
+            for char in board_content:
+                if char in ['P', 'C', 'D', 'S', 'B', '0']:
+                    if char == 'P':
+                        colored_board += colored(char, 'red', on_color='on_light_red')
+                    elif char == 'C':
+                        colored_board += colored(char, 'red', "on_light_red")
+                    elif char == 'D':
+                        colored_board += colored(char, 'red', on_color="on_light_red")
+                    elif char == 'S':
+                        colored_board += colored(char, 'red', on_color="on_light_red")
+                    elif char == 'B':
+                        colored_board += colored(char, 'red', on_color="on_light_red")
+                    elif char == '0':
+                        colored_board += colored(char, 'blue')
+                else:
+                    colored_board += char
+        else:  # This is a row label or border
+            colored_board += board
+        colored_board += "\n"
+
+    for line in colored_board.splitlines():
+        print(line)
+
+
 def gameStart():
     start_game = "(s) = Start Game"
     info = "(i) = Info"
@@ -114,22 +145,21 @@ def gameInfo():
     | *A sample board is shown below of what the enemy's boat positioning may look like:                               |
     |  """
     info7_5 = """Keep in mind you will not be able to see the enemies board, only your own mission data."""
-    board1_a = """
-    |------------------------------------------------------------------------------------------------------------------|
-    |                            ||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10                          |"""
-    board1_b = """
+    board1 = """
+    |__________________________________________________________________________________________________________________|
+    |                        ||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10                              |
     | ________________________________________________________________________________________________________________ |
-    |                          A ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  P  |  P   ||                      |
-    |                          B ||  C  |  C  |  C  |  C  |  C  |  0  |  0  |  0  |  0  |  0   ||                      |
-    |                          C ||  D  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0   ||                      |
-    |                          D ||  D  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0   ||                      |
-    |                          F ||  D  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0   ||                      |
-    |                          G ||  S  |  S  |  S  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                      |
-    |                          H ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                      |
-    |                          I ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                      |
-    |                          J ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                      |
-    |------------------------------------------------------------------------------------------------------------------|
-    """
+    |                      A ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  P  |  P   ||                          |
+    |                      B ||  C  |  C  |  C  |  C  |  C  |  0  |  0  |  0  |  0  |  0   ||                          |
+    |                      C ||  D  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0   ||                          |
+    |                      D ||  D  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0   ||                          |
+    |                      F ||  D  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0   ||                          |
+    |                      G ||  S  |  S  |  S  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                          |
+    |                      H ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                          |
+    |                      I ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                          |
+    |                      J ||  0  |  0  |  0  |  0  |  0  |  0  |  0  |  0  |  B  |  0   ||                          |
+    |__________________________________________________________________________________________________________________|
+    |                                                                                                                  |"""
     board2= """
     | The board below represents your view of the enemies board. You will be able to see hits, misses, and sunk ships. |
     |__________________________________________________________________________________________________________________|
@@ -227,7 +257,8 @@ def gameInfo():
     print(info6_colored, end="")
     print(info7_colored, end="")
     cprint(info7_5, "cyan", attrs=["underline"], end=" ")
-    print("                        |\n", end="")
+    print("                        |", end="")
+    printDemo(board1)
 
     response = input()
     if response == 's':
