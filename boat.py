@@ -35,15 +35,12 @@ def recursiveCheck(
     original_y,
     player,
     directions_checked,
-    results,
+    left_results,
+    right_results,
+    up_results,
+    down_results
 ):
-    array = player.defense_view
     length_to_parse = size
-    original_size = original_size
-    original_x = original_x
-    original_y = original_y
-    y = y
-    x = x
 
     ##########!############
     if directions_checked != []:
@@ -59,28 +56,34 @@ def recursiveCheck(
                     original_y=original_y,
                     player=player,
                     directions_checked=directions_checked,
-                    results=[],
+                    left_results=left_results,
+                    right_results = right_results,
+                    up_results=up_results,
+                    down_results=down_results
                 )
-            if player.defense_view[x][y] == 0:
-                length_to_parse -= 1
-                results.append([x, y])
-                if length_to_parse - 1 == 0:
-                    if is_index_in_range(player.defense_view, x, y - 1):
-                        if player.defense_view[x][y - 1] == 0:
-                            results.append([x, y - 1])
-                            directions_checked.remove("left")
-                            recursiveCheck(
-                                size=original_size,
-                                original_size=original_size,
-                                x=original_x,
-                                original_x=original_x,
-                                original_y=original_y,
-                                y=original_y,
-                                player=player,
-                                directions_checked=directions_checked,
-                                results=results,
-                            )
-                        directions_checked.remove("left")
+            if is_index_in_range(player.defense_view, x - 1, y):
+                if player.defense_view[x][y] == 0:
+                    length_to_parse -= 1
+                    left_results.append([x, y])
+                    if length_to_parse - 1 == 0:
+                        if is_index_in_range(player.defense_view, x, y - 1):
+                            if player.defense_view[x][y - 1] == 0:
+                                left_results.append([x, y - 1])
+                                directions_checked.remove("left")
+                                recursiveCheck(
+                                    size=original_size,
+                                    original_size=original_size,
+                                    x=original_x,
+                                    original_x=original_x,
+                                    original_y=original_y,
+                                    y=original_y,
+                                    player=player,
+                                    directions_checked=directions_checked,
+                                    left_results=left_results,
+                                    right_results = right_results,
+                                    up_results=up_results,
+                                    down_results=down_results
+                                )
                 recursiveCheck(
                     size=length_to_parse,
                     original_size=original_size,
@@ -90,10 +93,14 @@ def recursiveCheck(
                     original_y=original_y,
                     player=player,
                     directions_checked=directions_checked,
-                    results=results,
+                    left_results=left_results,
+                    right_results = right_results,
+                    up_results=up_results,
+                    down_results=down_results
                 )
             else:
-                directions_checked.remove("left")
+                if "left" in directions_checked:
+                    directions_checked.remove("left")
         ##########!#############
         if "right" in directions_checked:
             if x < 0 or x > 9 or y < 0 or y > 9:
@@ -107,28 +114,34 @@ def recursiveCheck(
                     original_y=original_y,
                     player=player,
                     directions_checked=directions_checked,
-                    results=[],
+                    left_results=left_results,
+                    right_results = right_results,
+                    up_results=up_results,
+                    down_results=down_results
                 )
-            if player.defense_view[x][y] == 0:
-                length_to_parse -= 1
-                results.append([x, y])
-                if length_to_parse - 1 == 0:
-                    if is_index_in_range(player.defense_view, x, y + 1):
-                        if player.defense_view[x][y + 1] == 0:
-                            results.append([x, y + 1])
-                            directions_checked.remove("right")
-                            recursiveCheck(
-                                size=original_size,
-                                original_size=original_size,
-                                x=original_x,
-                                original_x=original_x,
-                                original_y=original_y,
-                                y=original_y,
-                                player=player,
-                                directions_checked=directions_checked,
-                                results=results,
-                            )
-                    directions_checked.remove("right")
+            if is_index_in_range(player.defense_view, x, y):
+                if player.defense_view[x][y] == 0:
+                    length_to_parse -= 1
+                    right_results.append([x, y])
+                    if length_to_parse - 1 == 0:
+                        if is_index_in_range(player.defense_view, x, y + 1):
+                            if player.defense_view[x][y + 1] == 0:
+                                right_results.append([x, y + 1])
+                                directions_checked.remove("right")
+                                recursiveCheck(
+                                    size=original_size,
+                                    original_size=original_size,
+                                    x=original_x,
+                                    original_x=original_x,
+                                    original_y=original_y,
+                                    y=original_y,
+                                    player=player,
+                                    directions_checked=directions_checked,
+                                    left_results=left_results,
+                                    right_results=right_results,
+                                    up_results=up_results,
+                                    down_results=down_results
+                                )
                 recursiveCheck(
                     size=length_to_parse,
                     original_size=original_size,
@@ -138,10 +151,14 @@ def recursiveCheck(
                     original_y=original_y,
                     player=player,
                     directions_checked=directions_checked,
-                    results=results,
+                    left_results=left_results,
+                    right_results=right_results,
+                    up_results=up_results,
+                    down_results=down_results
                 )
             else:
-                directions_checked.remove("right")
+                 if "right" in directions_checked:
+                    directions_checked.remove("right")
         ##########!############
         if "up" in directions_checked:
             if x < 0 or x > 9 or y < 0 or y > 9:
@@ -155,28 +172,34 @@ def recursiveCheck(
                     original_y=original_y,
                     player=player,
                     directions_checked=directions_checked,
-                    results=[],
+                    left_results=left_results,
+                    right_results=right_results,
+                    up_results=up_results,
+                    down_results=down_results
                 )
-            if player.defense_view[x][y] == 0:
-                length_to_parse -= 1
-                results.append([x, y])
-                if length_to_parse - 1 == 0:
-                    if is_index_in_range(player.defense_view, x - 1, y):
-                        if player.defense_view[x - 1][y] == 0:
-                            results.append([x - 1, y])
-                            directions_checked.remove("up")
-                            recursiveCheck(
-                                size=original_size,
-                                original_size=original_size,
-                                x=original_x,
-                                y=original_y,
-                                original_x=original_x,
-                                original_y=original_y,
-                                player=player,
-                                directions_checked=directions_checked,
-                                results=results,
-                            )
-                        directions_checked.remove("up")
+            if is_index_in_range(player.defense_view, x, y):
+                if player.defense_view[x][y] == 0:
+                    length_to_parse -= 1
+                    up_results.append([x, y])
+                    if length_to_parse - 1 == 0:
+                        if is_index_in_range(player.defense_view, x - 1, y):
+                            if player.defense_view[x - 1][y] == 0:
+                                up_results.append([x - 1, y])
+                                directions_checked.remove("up")
+                                recursiveCheck(
+                                    size=original_size,
+                                    original_size=original_size,
+                                    x=original_x,
+                                    y=original_y,
+                                    original_x=original_x,
+                                    original_y=original_y,
+                                    player=player,
+                                    directions_checked=directions_checked,
+                                    left_results=left_results,
+                                    right_results=right_results,
+                                    up_results=up_results,
+                                    down_results=down_results
+                                )
 
                 recursiveCheck(
                     size=length_to_parse,
@@ -187,10 +210,14 @@ def recursiveCheck(
                     original_y=original_y,
                     player=player,
                     directions_checked=directions_checked,
-                    results=results,
+                    left_results=left_results,
+                    right_results=right_results,
+                    up_results=up_results,
+                    down_results=down_results
                 )
             else:
-                directions_checked.remove("up")
+                 if "up" in directions_checked:
+                    directions_checked.remove("up")
         ##########!############
         if "down" in directions_checked:
             if x < 0 or x > 9 or y < 0 or y > 9:
@@ -204,27 +231,36 @@ def recursiveCheck(
                     original_y=original_y,
                     player=player,
                     directions_checked=directions_checked,
-                    results=results,
+                    left_results=left_results,
+                    right_results=right_results,
+                    up_results=up_results,
+                    down_results=down_results
                 )
-            if player.defense_view[x][y] == 0:
-                length_to_parse -= 1
-                results.append([x, y])
-                if length_to_parse - 1 == 0:
-                    if is_index_in_range(player.defense_view, x + 1, y):
-                        if player.defense_view[x + 1][y] == 0:
-                            results.append([x + 1, y])
-                            recursiveCheck(
-                                size=original_size,
-                                original_size=original_size,
-                                x=x + 1,
-                                y=y,
-                                original_x=original_x,
-                                original_y=y,
-                                player=player,
-                                directions_checked=directions_checked,
-                                results=results,
-                            )
-                directions_checked.remove("down")
+            if is_index_in_range(player.defense_view, x, y):
+                if player.defense_view[x][y] == 0:
+                    length_to_parse -= 1
+                    down_results.append([x, y])
+                    if length_to_parse - 1 == 0:
+                        if is_index_in_range(player.defense_view, x + 1, y):
+                            if player.defense_view[x + 1][y] == 0:
+                                down_results.append([x + 1, y])
+                                directions_checked.remove("down")
+                                recursiveCheck(
+                                    size=original_size,
+                                    original_size=original_size,
+                                    x=x + 1,
+                                    y=y,
+                                    original_x=original_x,
+                                    original_y=y,
+                                    player=player,
+                                    directions_checked=directions_checked,
+                                left_results=left_results,
+                                right_results=right_results,
+                                up_results=up_results,
+                                down_results=down_results
+                                )
+                        if "down" in directions_checked:
+                            directions_checked.remove("down")
                 if is_index_in_range(player.defense_view, x + 1, y):
                     recursiveCheck(
                         size=length_to_parse,
@@ -235,29 +271,54 @@ def recursiveCheck(
                         original_y=original_y,
                         player=player,
                         directions_checked=directions_checked,
-                        results=results,
+                        left_results=left_results,
+                        right_results=right_results,
+                        up_results=up_results,
+                        down_results=down_results
                     )
             else:
-                directions_checked.remove("down")
+                 if "down" in directions_checked:
+                    directions_checked.remove("down")
     else:
-        return results
+        return left_results
 
 
 def gameStart():
     boat_spawn()
     for boat in player1.boats:
         directions = ["left", "right", "up", "down"]
-        placing = True
-        while placing:
-            x = random.randint(0, 9)
-            y = random.randint(0, 9)
-            possible_results = []
-            random_location = player1.defense_view[x][y]
-            results = recursiveCheck(
-                boat.size, boat.size, x, y, x, y, player1, directions, possible_results
-            )
-            if possible_results == []:
-                placing = False
+        x = random.randint(0, 9)
+        y = random.randint(0, 9)
+        possible_results_left = []
+        possible_results_right = []
+        possible_results_up = []
+        possible_results_down = []
+        random_location = player1.defense_view[x][y]
+        results = recursiveCheck(
+            boat.size, boat.size, x, y, x, y, player1, directions, possible_results_left, possible_results_right, possible_results_up, possible_results_down
+        )
+        print("BOAT SIZE = ", boat.size)
+        all_results = [possible_results_left] + [possible_results_right] + [possible_results_down] + [possible_results_up]
+        print("All Results = ", all_results)
+        print("length of all_results BEFORE remove", len(all_results))
+        for array in all_results:
+            if len(array) != boat.size:
+                all_results.remove(array)
+        print("Second All Results = ", all_results)
+        print("length of all_results AFTER remove", len(all_results))
+        length_of_final_results = len(all_results)
+        random_index = random.randint(0, length_of_final_results-1)
+        choice = all_results[random_index]
+        print("Value of choice", choice)
+        hp_count = boat.health
+        boat_char = boat.health[0]
+        for i in choice:
+            print("this is value of i", i)
+
+
+
+        print(all_results)
+        print("BOAT DONE")
 
 
 class Boat:
