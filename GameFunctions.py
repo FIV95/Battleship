@@ -1,12 +1,10 @@
 import random
 from boat import Boat
-from player import Player
+from player import Player, player1, player2
 import HelperFunctions
 
 
 def gameStart():
-    player1 = Player("Player 1")
-    player2 = Player("Player 2")
     boat_spawn()
     for player in Player.all_players:
         for boat in player.boats:
@@ -28,56 +26,57 @@ def gameStart():
             length_of_final_results = len(all_results)
             random_index = random.randint(0, length_of_final_results -1)
             choice = all_results[random_index]
-            print("Value of choice", choice)
             hp_count = len(boat.health)
             boat_char = boat.health[0]
             while hp_count > 0:
                 for i in choice:
-                    print(type(i))
                     player.defense_view[i[0]][i[1]] = boat_char
                     hp_count = hp_count - 1
-            HelperFunctions.defense_view_render(player.defense_view)
             possible_results_down = []
             possible_results_up = []
             possible_results_left = []
             possible_results_right = []
-    boat_dict = {
-    ("player1", "C"): player1.boats[0],
-    ("player1", "B"): player1.boats[1],
-    ("player1", "D"): player1.boats[2],
-    ("player1", "S"): player1.boats[3],
-    ("player1", "P"): player1.boats[4],
-    ("player2", "C"): player2.boats[0],
-    ("player2", "B"): player2.boats[1],
-    ("player2", "D"): player2.boats[2],
-    ("player2", "S"): player2.boats[3],
-    ("player2", "P"): player2.boats[4],
-}
+
 
 
     HelperFunctions.defense_view_render(player.defense_view)
 
 def boat_spawn():
-    player1_carrier = Boat("Carrier", 5, "CCCCC", 5, player1)
-    player1_battleship = Boat("Battleship", 4, "BBBB", 4, player1)
-    player1_destroyer = Boat("Destroyer", 3, "DDD", 3,  player1)
-    player1_submarine = Boat("Submarine", 3, "SSS", 3,  player1)
-    player1_patrol_boat = Boat("Patrol Boat", 2, "PP", 2, player1)
+    player1_carrier = Boat(name="Carrier", size=5, health="CCCCC", hp=5, player=player1)
+    player1_battleship = Boat(name="Battleship", size=4, health="BBBB", hp=4, player=player1)
+    player1_destroyer = Boat(name="Destroyer", size=3, health="DDD", hp=3, player=player1)
+    player1_submarine = Boat(name="Submarine", size=3, health="SSS", hp=3, player=player1)
+    player1_patrol_boat = Boat(name="Patrol Boat", size=2, health="PP", hp=2, player=player1)
 
-    player2_carrier = Boat("Carrier", 5, "CCCCC", player2)
-    player2_battleship = Boat("Battleship", 4, "BBBB", player2)
-    player2_destroyer = Boat("Destroyer", 3, "DDD", player2)
-    player2_submarine = Boat("Submarine", 3, "SSS", player2)
-    player2_patrol_boat = Boat("Patrol Boat", 2, "PP", player2)
+    player2_carrier = Boat(name="Carrier", size=5, health="CCCCC", hp=5, player=player2)
+    player2_battleship = Boat(name="Battleship", size=4, health="BBBB", hp=4, player=player2)
+    player2_destroyer = Boat(name="Destroyer", size=3, health="DDD", hp=3, player=player2)
+    player2_submarine = Boat(name="Submarine", size=3, health="SSS", hp=3, player=player2)
+    player2_patrol_boat = Boat(name="Patrol Boat", size=2, health="PP", hp=2, player=player2)
+
 
     for boat in Boat.all_boats:
         if boat.player == player1:
             player1.boats.append(boat)
         if boat.player == player2:
             player2.boats.append(boat)
+    Boat.boat_dict = {
+    ("Player 1", "C"): player1.boats[0],
+    ("Player 1", "B"): player1.boats[1],
+    ("Player 1", "D"): player1.boats[2],
+    ("Player 1", "S"): player1.boats[3],
+    ("Player 1", "P"): player1.boats[4],
+    ("Player 2", "C"): player2.boats[0],
+    ("Player 2", "B"): player2.boats[1],
+    ("Player 2", "D"): player2.boats[2],
+    ("Player 2", "S"): player2.boats[3],
+    ("Player 2", "P"): player2.boats[4],
+    }
+    return Boat.boat_dict
+
 
 def mid_game_info():
-    print("If at anytime you wish to view your defense board, type 'd'")
+    print("\nIf at anytime you wish to view your defense board, type 'd'")
 
 
 def boatPlacementCheck(player, x, y, size, directions_to_check, left_results, right_results,up_results, down_results):
@@ -186,10 +185,10 @@ def boatPlacementCheck(player, x, y, size, directions_to_check, left_results, ri
     return
 
 def primary_game_loop():
-    while all(boat.hp > 0 for boat in player1.boats) and all(boat.hp > 0 for boat in player2.boats):
+    while any(boat.hp > 0 for boat in player1.boats) and all(boat.hp > 0 for boat in player2.boats):
         mid_game_info()
-        player1.player_turn_complete(player2)
-        player2.computer_turn_complete(player1)
+        player1.player_turn_complete(player2,Boat.boat_dict)
+        player2.computer_turn_complete(player1, Boat.boat_dict)
 
     if all(boat.hp <= 0 for boat in player1.boats):
         print("Player 2 wins!")

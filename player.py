@@ -1,9 +1,11 @@
 import random
+from boat import Boat
 from HelperFunctions import is_index_in_range as range_check
 from HelperFunctions import board, board_dict
 from HelperFunctions import coordinate_translator
 from HelperFunctions import array_translator
 from HelperFunctions import defense_view_render
+
 
 class Player:
     all_players = []
@@ -65,33 +67,32 @@ class Player:
             result = [x,y]
             return result
 
-    def player_turn_initiate(self, target):
-        player_input = input("Enter your attack coordinates: ")
-        player_input = player_input.upper()
-        #! convert player input to [x,y] to match against 2d array
-        if player_input in board_dict:
-            array = coordinate_translator(self.offense_view, player_input)
-        elif player_input == "d":
-            defense_view_render(self.defense_view)
-            self.player_turn_complete()
-        else:
-            print("Invalid input")
-            self.player_turn_complete()
-        if array in self.moves:
-            print("You have already attacked this coordinate, please try again")
-            self.player_turn_complete()
-        else:
-            return array
+    def player_turn_initiate(self, player2):
+        while True:
+            player_input = input("\nEnter your attack coordinates: ").upper()
+            if player_input == 'D':
+                defense_view_render(self.defense_view)
+                self.player_turn_complete(player2,Boat.boat_dict)
+            elif player_input in board_dict:
+                array = coordinate_translator(player_input)
+                if array in self.moves:
+                    print("You have already attacked this coordinate, please try again")
+                else:
+                    self.moves.append(array)
+                    return array
+            else:
+                print("Invalid input")
+                self.player_turn_complete(player2,Boat.boat_dict)
 
     def turn_print(self, array_to_be_translated):
         if self == player1:
             source = "Player 1"
         else:
             source = "Player 2"
-        cordinate = array_translator(self.offense_view, array_to_be_translated)
+        cordinate = array_translator(array_to_be_translated)
         print("{source} has attacked {cordinate}".format(source = source, cordinate = cordinate))
 
-    def turn_process(self, target, coordinate_array):
+    def turn_process(self, target, coordinate_array, boat_dict):
         player_name = self.name
         if target.defense_view[coordinate_array[0]][coordinate_array[1]] in ['C', 'B', 'D', 'S', 'P']:
             boat_type = target.defense_view[coordinate_array[0]][coordinate_array[1]]
@@ -111,18 +112,21 @@ class Player:
             print("Attack has missed!")
             self.offense_view[coordinate_array[0]][coordinate_array[1]] = 'X'
 
-    def computer_turn_complete(self, player1):
+    def computer_turn_complete(self, player1, boat_dict):
         target_array = self.computer_turn_initiate()
         self.turn_print(target_array)
-        self.turn_process(target = player1, coordinate_array=target_array)
+        self.turn_process(target = player1, coordinate_array=target_array, boat_dict= boat_dict)
 
-    def player_turn_complete(self, player2):
-        target_array = self.player_turn_initiate()
+    def player_turn_complete(self, player2, boat_dict):
+        target_array = self.player_turn_initiate(player2)
         self.turn_print(target_array)
-        self.turn_process(target = player2, coordinate_array=target_array)
+        print(target_array)
+        self.turn_process(target = player2, coordinate_array=target_array, boat_dict= boat_dict)
 
     def player1_boat_status(self):
         for boat in self.boats:
             print(boat)
 
+player1 = Player("Player 1")
+player2 = Player("Player 2")
 

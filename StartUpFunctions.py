@@ -1,6 +1,7 @@
 from termcolor import colored, cprint
 import HelperFunctions
-from battleship import gameLoop
+from gameLoop import gameLoop
+import GameFunctions
 
 def gameLaunch():
     start_game = "(s) = Start Game"
@@ -237,6 +238,7 @@ def gameInfo():
     print(info8)
     response = input()
     if response == "s":
-        pass
+        print("Starting game...")
+        GameFunctions.primary_game_loop()
     else:
         gameLoop()

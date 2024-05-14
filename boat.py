@@ -1,5 +1,6 @@
 class Boat:
     all_boats = []
+    boat_dict = {}
 
     def __init__(self, name, size, health, hp, player):
         self.name = name
