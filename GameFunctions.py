@@ -191,10 +191,9 @@ def primary_game_loop():
         mid_game_info()
         player1.player_turn_complete(player2,Boat.boat_dict)
         player2.computer_turn_complete(player1, Boat.boat_dict)
-        print()
+        turn = turn + 1
 
     if all(boat.hp <= 0 for boat in player1.boats):
         print("Player 2 wins!")
     else:
         print("Player 1 wins!")
-    turn = turn + 1

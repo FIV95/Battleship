@@ -42,6 +42,7 @@ class Player:
         ## we compare those values to the values stored in self.offense_view
         possible_moves = []
         if len(last_four_moves) > 0:
+            print("hit  last four moves")
             for move in last_four_moves:
                 x = move[0]
                 y = move[1]
@@ -72,7 +73,6 @@ class Player:
             player_input = input("\nEnter your attack coordinates: ").upper()
             if player_input == 'D':
                 view_render(self.defense_view)
-                self.player_turn_complete(player2,Boat.boat_dict)
             elif player_input == 'O':
                 view_render(self.offense_view)
             elif player_input == 'EXIT':
@@ -108,6 +108,7 @@ class Player:
             boat.hp = boat.hp - 1
             if boat.hp == 0:
                 print("{target} has lost a ship.".format(target = target))
+                self.offense_view[coordinate_array[0]][coordinate_array[1]] = '#'
             else:
                 print("Attack successful. Marking boards respectively")
                 self.offense_view[coordinate_array[0]][coordinate_array[1]] = '#'
@@ -124,7 +125,6 @@ class Player:
     def player_turn_complete(self, player2, boat_dict):
         target_array = self.player_turn_initiate(player2)
         self.turn_print(target_array)
-        print(target_array)
         self.turn_process(target = player2, coordinate_array=target_array, boat_dict= boat_dict)
 
     def player1_boat_status(self):
