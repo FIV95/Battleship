@@ -26,7 +26,7 @@ def gameLoop():
                     gameLoop()
         else:
             cprint(
-                "Invalid selection Pleaes enter 's' 'i' or 'q'",
+                "Invalid selection Please enter 's' 'i' or 'q'",
                 "red",
                 "on_green",
                 attrs=["bold"],
