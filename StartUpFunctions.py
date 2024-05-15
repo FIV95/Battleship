@@ -239,6 +239,7 @@ def gameInfo():
     response = input()
     if response == "s":
         print("Starting game...")
+        GameFunctions.gameStart()
         GameFunctions.primary_game_loop()
     else:
         gameLoop()

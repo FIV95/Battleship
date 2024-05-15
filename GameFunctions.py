@@ -39,7 +39,7 @@ def gameStart():
 
 
 
-    HelperFunctions.defense_view_render(player.defense_view)
+    HelperFunctions.view_render(player.defense_view)
 
 def boat_spawn():
     player1_carrier = Boat(name="Carrier", size=5, health="CCCCC", hp=5, player=player1)
@@ -77,6 +77,7 @@ def boat_spawn():
 
 def mid_game_info():
     print("\nIf at anytime you wish to view your defense board, type 'd'")
+    print("If at anytime you wish to view your offense board, type 'o'")
 
 
 def boatPlacementCheck(player, x, y, size, directions_to_check, left_results, right_results,up_results, down_results):
@@ -185,12 +186,17 @@ def boatPlacementCheck(player, x, y, size, directions_to_check, left_results, ri
     return
 
 def primary_game_loop():
+    turn = 0
+    print("\t\t\nAt any point type exit to close the game")
     while any(boat.hp > 0 for boat in player1.boats) and all(boat.hp > 0 for boat in player2.boats):
+        print("\t\t\n\nTURN # {turn} -------------------------------------------------".format(turn = turn))
         mid_game_info()
         player1.player_turn_complete(player2,Boat.boat_dict)
         player2.computer_turn_complete(player1, Boat.boat_dict)
+        print()
 
     if all(boat.hp <= 0 for boat in player1.boats):
         print("Player 2 wins!")
     else:
         print("Player 1 wins!")
+    turn = turn + 1

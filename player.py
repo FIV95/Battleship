@@ -4,7 +4,7 @@ from HelperFunctions import is_index_in_range as range_check
 from HelperFunctions import board, board_dict
 from HelperFunctions import coordinate_translator
 from HelperFunctions import array_translator
-from HelperFunctions import defense_view_render
+from HelperFunctions import view_render
 
 
 class Player:
@@ -71,8 +71,12 @@ class Player:
         while True:
             player_input = input("\nEnter your attack coordinates: ").upper()
             if player_input == 'D':
-                defense_view_render(self.defense_view)
+                view_render(self.defense_view)
                 self.player_turn_complete(player2,Boat.boat_dict)
+            elif player_input == 'O':
+                view_render(self.offense_view)
+            elif player_input == 'EXIT':
+                exit()
             elif player_input in board_dict:
                 array = coordinate_translator(player_input)
                 if array in self.moves:
