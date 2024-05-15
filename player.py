@@ -86,6 +86,7 @@ class Player:
                     return array
             else:
                 print("Invalid input")
+
                 self.player_turn_complete(player2,Boat.boat_dict)
 
     def turn_print(self, array_to_be_translated):
