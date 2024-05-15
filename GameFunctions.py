@@ -38,9 +38,6 @@ def gameStart():
             possible_results_right = []
 
 
-
-    HelperFunctions.view_render(player.defense_view)
-
 def boat_spawn():
     player1_carrier = Boat(name="Carrier", size=5, health="CCCCC", hp=5, player=player1)
     player1_battleship = Boat(name="Battleship", size=4, health="BBBB", hp=4, player=player1)
@@ -187,6 +184,7 @@ def boatPlacementCheck(player, x, y, size, directions_to_check, left_results, ri
 
 def primary_game_loop():
     turn = 0
+    HelperFunctions.view_render(player1.defense_view)
     print("\t\t\nAt any point type exit to close the game")
     while any(boat.hp > 0 for boat in player1.boats) and all(boat.hp > 0 for boat in player2.boats):
         print("\t\t\n\nTURN # {turn} -------------------------------------------------".format(turn = turn))

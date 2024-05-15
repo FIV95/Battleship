@@ -166,7 +166,7 @@ def printBoard(header, border, board, footer):
 def is_index_in_range(array, row_index, col_index):
     return 0 <= row_index < len(array) and 0 <= col_index < len(array[0])
 
-def defense_view_render(array):
+def view_render(array):
     string1 = """
     |                         ||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10                              |"""
     string2= """
